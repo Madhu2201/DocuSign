@@ -1,0 +1,74 @@
+form {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+input[type="email"],
+input[type="password"] {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: border 0.3s, box-shadow 0.3s;
+  font-size: 16px;
+}
+
+input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1);
+  outline: none;
+}
+
+button {
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+hr {
+  margin: 30px 0;
+  border: none;
+  height: 1px;
+  background: #eee;
+}
+
+.forgot-password-btn {
+  background-color: transparent;
+  color: #007bff;
+  text-decoration: underline;
+  font-size: 14px;
+  margin-top: 10px;
+  transition: color 0.3s;
+}
+
+.forgot-password-btn:hover {
+  color: #0056b3;
+}
+
+div[ng-reflect-ng-if="true"] {
+  color: red;
+  font-weight: 500;
+  text-align: center;
+  animation: fadeIn 0.4s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

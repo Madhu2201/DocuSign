@@ -1,0 +1,150 @@
+
+
+
+<div class="sign-document-container">
+  <div class="document-info">
+    <h2>{{ envelopeTitle }}</h2>
+    <p>Welcome, {{ recipientName }}</p>
+  </div>
+
+  <div *ngIf="error" class="error">{{ error }}</div>
+  <div *ngIf="success" class="success">{{ success }}</div>
+
+  <div class="pdf-viewer">
+    <div class="pdf-controls">
+      <button [disabled]="currentPage <= 1" (click)="prevPage()">Previous Page</button>
+      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+      <button [disabled]="currentPage >= totalPages" (click)="nextPage()">Next Page</button>
+    </div>
+
+    <div class="pdf-container" >
+      <canvas #pdfCanvas></canvas>
+
+      <div class="fields-overlay">
+        <ng-container *ngFor="let field of fields">
+      <div *ngIf="field.page === currentPage"
+     class="field-box"
+     [class.signature-field]="field.type === 'signature'"
+     [class.filled]="field.signed"
+     [ngStyle]="getFieldPosition(field)"
+     (click)="onFieldClick(field)">
+  <div class="field-content">
+    <ng-container [ngSwitch]="field.type">
+      <span *ngSwitchCase="'signature'" class="placeholder">
+       <ng-container *ngIf="field.signed && field.value; else notSigned">
+  <div class="signature-wrapper">
+    <img [src]="field.value" class="signature-image" />
+    <div class="signed-by-label">Signed by {{ recipientName }}</div>
+  </div>
+</ng-container>
+        <ng-template #notSigned>
+          Click to sign here
+        </ng-template>
+      </span>
+
+                <ng-container *ngSwitchCase="'text'">
+                  <input *ngIf="activeField === field"
+                         type="text"
+                         [(ngModel)]="field.value"
+                         (blur)="finishEditingField()"
+                         (keydown.enter)="finishEditingField()"
+                         class="field-input" />
+                  <span *ngIf="activeField !== field" class="placeholder">
+                    {{ field.signed ? field.value : 'Text field' }}
+                  </span>
+                </ng-container>
+
+                <ng-container *ngSwitchCase="'date'">
+                  <input *ngIf="activeField === field"
+                         type="date"
+                         [(ngModel)]="field.value"
+                         (blur)="finishEditingField()"
+                         (keydown.enter)="finishEditingField()"
+                         class="field-input" />
+                  <span *ngIf="activeField !== field" class="placeholder">
+                    {{ field.signed ? field.value : 'Date field' }}
+                  </span>
+                </ng-container>
+              </ng-container>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="activeField?.type === 'signature'" class="signature-modal">
+    <div class="signature-pad-container">
+      <h3>Sign Document</h3>
+
+      <div class="signature-mode-toggle">
+        <label>
+          <input type="radio" name="signMode" value="draw" [(ngModel)]="signatureMode" />
+          Draw
+        </label>
+        <label>
+          <input type="radio" name="signMode" value="type" [(ngModel)]="signatureMode" />
+          Type
+        </label>
+      </div>
+
+      <div *ngIf="signatureMode === 'draw'">
+        <signature-pad #signaturePad
+                       [options]="{ minWidth: 1, maxWidth: 2, penColor: 'rgb(0, 0, 0)' }"
+                       class="signature-pad">
+        </signature-pad>
+        <div class="signature-controls">
+          <button (click)="signaturePad?.clear()">Clear</button>
+        </div>
+      </div>
+
+<div>
+  <label>Type Signature</label>
+  <input type="text" [(ngModel)]="typedName" placeholder="Type your name" />
+</div>
+
+<div style="margin: 10px 0;">
+  <label>Select Font:</label>
+  <div class="font-preview-container">
+    <div 
+      *ngFor="let font of fonts"
+      (click)="selectedFont = font"
+      [ngStyle]="{
+        'font-family': font,
+        'font-size': '24px',
+        'padding': '10px',
+        'margin': '5px',
+        'border': selectedFont === font ? '2px solid blue' : '1px solid gray',
+        'cursor': 'pointer'
+      }">
+      {{ typedName || 'Your Name' }}
+    </div>
+  </div>
+</div>
+
+<div *ngIf="typedName && selectedFont" class="typed-signature-preview">
+  <p [ngStyle]="{ 
+        'font-family': selectedFont, 
+        'font-size': '36px',
+        'font-weight': '400',
+        'color': 'black'
+      }">
+    {{ typedName }}
+  </p>
+</div>
+      <div class="signature-controls">
+        <button (click)="signField()">Sign</button>
+        <button (click)="activeField = null">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="submit-container">
+    <button 
+      class="submit-button" 
+      [disabled]="!allFieldsFilled()" 
+      (click)="submitSignedDocument()">
+      Submit Signed Document
+    </button>
+  </div>
+</div>

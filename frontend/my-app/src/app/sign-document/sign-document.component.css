@@ -1,0 +1,922 @@
+
+/* 
+
+.sign-document-container {
+  max-width: 900px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #222;
+  box-sizing: border-box;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgb(0 0 0 / 0.1);
+}
+
+.document-info h2 {
+  margin: 0 0 6px 0;
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: #2c3e50;
+}
+
+.document-info p {
+  margin: 0 0 16px 0;
+  font-size: 1rem;
+  color: #555;
+}
+
+.error {
+  background-color: #fdecea;
+  color: #d93025;
+  padding: 10px 15px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.success {
+  background-color: #e6f4ea;
+  color: #188038;
+  padding: 10px 15px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.pdf-viewer {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 10px;
+  background-color: #fafafa;
+}
+
+.pdf-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.pdf-controls button {
+  background-color: #3498db;
+  border: none;
+  color: white;
+  padding: 7px 16px;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pdf-controls button:disabled {
+  background-color: #a3c2e3;
+  cursor: not-allowed;
+}
+
+.pdf-controls span {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #333;
+}
+
+.pdf-container {
+  position: relative;
+  width: 100%;
+  height: auto;
+  user-select: none;
+  overflow: auto;
+  border-radius: 6px;
+  background: white;
+  box-shadow: 0 0 12px rgb(0 0 0 / 0.05);
+}
+
+canvas {
+  display: block;
+  max-width: 100%;
+  margin: 0 auto;
+  border-radius: 4px;
+}
+
+.fields-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; 
+}
+
+.field-box {
+  position: absolute;
+  border: 2px dashed #3498db;
+  background: rgba(52, 152, 219, 0.1);
+  padding: 4px 6px;
+  border-radius: 3px;
+  cursor: pointer;
+  pointer-events: auto; 
+  transition:  0.3s ease;
+  min-width: 100px;
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #2c3e50;
+  user-select: none;
+}
+.field-box.filled {
+  border: none;
+  background: transparent;
+  pointer-events: none; 
+}
+
+.field-box.signature-field {
+  border-color: #e67e22;
+  background: rgba(230, 126, 34, 0.15);
+  font-style: italic;
+  color: #d35400;
+}
+
+
+.field-content .placeholder {
+  pointer-events: none;
+}
+
+.signature-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.signature-pad-container {
+  background: white;
+  padding: 20px 25px;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgb(0 0 0 / 0.2);
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+}
+
+.signature-pad-container h3 {
+  margin: 0 0 16px;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: #34495e;
+}
+
+.signature-pad {
+  border: 2px solid #3498db;
+  border-radius: 5px;
+  width: 100%;
+  height: 150px;
+  touch-action: none;
+  user-select: none;
+  margin-bottom: 16px;
+}
+
+.signature-controls button {
+  margin: 0 8px;
+  padding: 8px 18px;
+  border-radius: 4px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.signature-controls button:nth-child(1) {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.signature-controls button:nth-child(1):hover {
+  background-color: #c0392b;
+}
+
+
+
+.signature-controls button:nth-child(3) {
+  background-color: #7f8c8d;
+  color: white;
+}
+
+.signature-controls button:nth-child(3):hover {
+  background-color: #606b6e;
+}
+
+.submit-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.submit-button {
+  background-color: #2980b9;
+  color: white;
+  padding: 12px 28px;
+  font-size: 1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+}
+
+.submit-button:disabled {
+  background-color: #a3c2e3;
+  cursor: not-allowed;
+}
+
+.submit-button:hover:not(:disabled) {
+  background-color: #1f618d;
+}
+.signature-image {
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
+}
+
+.field-input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  padding: 0 4px;
+  box-sizing: border-box;
+}
+.signed-value{
+  position:absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #188038;
+  background: transp;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.field-box.balance-field.filled {
+  border: none;
+  background: transparent;
+  pointer-events: none;
+  color: #5e3370;
+}
+.field-box.signature-field.filled {
+  background: transparent;
+  border: none;
+  pointer-events: none;
+  color: #d35400; 
+}
+.font-preview-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.font-preview-container div {
+  border: 1px solid #ccc;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 8px;
+  min-width: 120px;
+  text-align: center;
+  background-color: #fafafa;
+}
+
+.font-preview-container div:hover {
+  background-color: #e6f0ff;
+  border-color: #007bff;
+}
+
+.font-preview-container div.selected {
+  border: 2px solid #007bff;
+  background-color: #e6f0ff;
+}
+
+.typed-signature-preview {
+  margin-top: 15px;
+  padding: 10px 20px;
+  border: 1px dashed #aaa;
+  background-color: #f9f9f9;
+  border-radius: 6px;
+  display: inline-block;
+} */
+
+
+/* 
+.sign-document-container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 20px;
+  font-family: 'Segoe UI', sans-serif;
+  color: #85ccde;
+  
+}
+
+.document-info {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.document-info h2 {
+  font-size: 28px;
+  margin: 0;
+}
+
+.document-info p {
+  font-size: 18px;
+  color: #666;
+}
+
+.error {
+  color: #c0392b;
+  background-color: #fbeaea;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.success {
+  color: #27ae60;
+  background-color: #eafaf1;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.pdf-viewer {
+  position: relative;
+}
+
+.pdf-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 10px;
+}
+
+.pdf-controls button {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.pdf-controls button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pdf-container {
+  position: relative;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.fields-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.field-box {
+  pointer-events: auto;
+  cursor: pointer;
+  border: 2px dashed #888;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  text-align: center;
+  padding: 4px;
+  transition: border 0.3s;
+}
+
+.field-box.filled {
+     border: none;
+  background-color: transparent;
+}
+
+.field-box.signature-field {
+   border: none;
+  background-color: transparent;
+}
+
+.signature-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.field-input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  font-size: 14px;
+  padding: 2px;
+  background: transparent;
+}
+
+.signature-modal {
+  background-color: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.signature-pad-container {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  width: 500px;
+  max-width: 90vw;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.signature-mode-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.signature-mode-toggle label {
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.signature-pad {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  height: 150px;
+  margin-bottom: 10px;
+}
+
+.signature-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.signature-controls button {
+  padding: 8px 16px;
+  font-size: 14px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.signature-controls button:hover {
+  background-color: #0056b3;
+}
+
+.font-preview-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.font-preview-container div {
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #f1f1f1;
+  transition: all 0.2s ease;
+  font-size: 24px;
+  min-width: 130px;
+  text-align: center;
+}
+
+.font-preview-container div:hover {
+  background-color: #e0e0e0;
+}
+
+.font-preview-container div.selected {
+  border: 2px solid #007bff;
+  background-color: #d0eaff;
+}
+
+.typed-signature-preview {
+  margin-top: 15px;
+  padding: 12px;
+  background-color: #fefefe;
+  border: 1px dashed #999;
+  border-radius: 8px;
+  font-size: 32px;
+  color: #111;
+  font-style: italic;
+  display: inline-block;
+}
+
+.submit-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.submit-button {
+  padding: 12px 28px;
+  font-size: 16px;
+  border: none;
+  background-color: #28a745;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.submit-button:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+.submit-button:hover:not(:disabled) {
+  background-color: #218838;
+}
+.signature-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 100%; 
+}
+
+.signature-image {
+  max-width: 100%;
+  height: auto;
+}
+
+.signed-by-label {
+  font-size: 10px;
+  color: gray;
+  margin-top: 2px;
+  padding-left: 2px;
+  white-space: nowrap;
+}
+
+
+.field-box.signature-field.filled {
+  border: none;
+  background-color: transparent;
+  flex-direction: column; 
+  align-items: flex-start; 
+  justify-content: flex-start; 
+} */
+
+
+
+
+.sign-document-container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 24px;
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+  background-color: #fafafa;
+}
+
+.document-info {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.document-info h2 {
+  font-size: 30px;
+  margin-bottom: 6px;
+  color: #222;
+}
+
+.document-info p {
+  font-size: 18px;
+  color: #555;
+}
+
+.error,
+.success {
+  padding: 12px;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+.error {
+  color: #721c24;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+}
+
+.success {
+  color: #155724;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+}
+
+.pdf-viewer {
+  position: relative;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+.pdf-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  padding: 12px;
+  background-color: #f0f0f0;
+  border-bottom: 1px solid #ddd;
+}
+
+.pdf-controls button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.pdf-controls button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pdf-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.fields-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.field-box {
+  pointer-events: auto;
+  cursor: pointer;
+  border: 2px dashed #aaa;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.85);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  transition: border-color 0.2s ease;
+}
+
+.field-box:hover {
+  border-color: #007bff;
+}
+
+.field-box.filled,
+.field-box.signature-field.filled {
+  border: none;
+  background-color: transparent;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.field-input {
+  width: 100%;
+  height: 100%;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 4px;
+}
+
+.signature-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 100%;
+}
+
+.signature-image {
+  max-width: 100%;
+  height: auto;
+}
+
+.signed-by-label {
+  font-size: 11px;
+  color: #777;
+  margin-top: 2px;
+  padding-left: 2px;
+}
+
+.signature-modal {
+  background-color: rgba(0, 0, 0, 0.65);
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.signature-pad-container {
+  background: #fff;
+  padding: 28px;
+  border-radius: 12px;
+  width: 500px;
+  max-width: 95vw;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.signature-mode-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.signature-mode-toggle label {
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.signature-pad {
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  height: 150px;
+  margin-bottom: 10px;
+  background-color: white;
+}
+
+.signature-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.signature-controls button {
+  padding: 8px 20px;
+  font-size: 14px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.signature-controls button:hover {
+  background-color: #0056b3;
+}
+
+.font-preview-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.font-preview-container div {
+  padding: 10px 15px;
+  border-radius: 6px;
+  background-color: #f1f1f1;
+  transition: all 0.2s ease;
+  min-width: 120px;
+  text-align: center;
+  border: 1px solid #ccc;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.font-preview-container div:hover {
+  background-color: #e0e0e0;
+}
+
+.font-preview-container div.selected {
+  border: 2px solid #007bff;
+  background-color: #e6f0ff;
+}
+
+.typed-signature-preview {
+  margin-top: 16px;
+  padding: 10px;
+  background-color: #fefefe;
+  border: 1px dashed #999;
+  border-radius: 8px;
+  font-size: 32px;
+  color: #111;
+  font-style: italic;
+}
+
+.submit-container {
+  text-align: center;
+  margin-top: 24px;
+}
+
+.submit-button {
+  padding: 12px 28px;
+  font-size: 16px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.submit-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.submit-button:hover:not(:disabled) {
+  background-color: #218838;
+}
+.field-box.signature-field:not(.filled) {
+  border: 2px dashed #007bff;
+  background-color: rgba(0, 123, 255, 0.1);
+  font-weight: bold;
+  font-size: 16px;
+  padding: 8px;
+  animation: pulse 1.5s infinite;
+  transition: transform 0.3s ease;
+  z-index: 10;
+}@keyframes pulseHighlight {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(0, 123, 255, 0.5);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.8);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(0, 123, 255, 0.5);
+  }
+}
+
+.signature-highlight {
+  background-color: #007bff;
+  color: #fff;
+  padding: 12px 18px;
+  font-size: 18px;
+  font-weight: bold;
+  border: 2px dashed #fff;
+  border-radius: 10px;
+  cursor: pointer;
+  display: inline-block;
+  animation: pulseHighlight 1.2s infinite;
+  z-index: 1000;
+}

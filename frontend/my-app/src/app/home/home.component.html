@@ -1,0 +1,31 @@
+<div class="header">
+  <h1>DocuSign</h1>
+  <div class="header-buttons">
+    <!-- <button routerLink="/create" class="create-btn">Create New Envelope</button> -->
+<button [routerLink]="['/completed-documents']" class="view-docs-btn">
+  View Documents
+</button>   
+ <button (click)="logout()" class="logout-btn">Logout</button>
+  </div>
+</div>
+<div class="intro-section">
+  <div class="intro-image">
+    <img src="assets/image/docusign-homepage.png" alt="Document Signing" />
+  </div>
+  <div class="intro-content">
+    <h2>Welcome to the Document Signing App</h2>
+    <p>
+      Create, manage, and sign documents seamlessly and securely. Our platform
+      enables you to send envelopes, assign recipients, and track every action 
+      with audit logs. Experience a smooth and paperless workflow.
+    </p>
+    <button routerLink="/create" class="create-btn-big">Get Started</button>
+  </div>
+</div>
+
+
+<router-outlet></router-outlet>
+<!-- <app-envelopecreate></app-envelopecreate> -->
+<!-- <app-sign-document></app-sign-document> -->
+<!-- <app-envelope-details></app-envelope-details> -->
+

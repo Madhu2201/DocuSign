@@ -1,0 +1,11 @@
+<form (ngSubmit)="login()">
+  <input type="email" [(ngModel)]="email" name="email" required />
+  <input type="password" [(ngModel)]="password" name="password" required />
+  <button type="submit">Login</button>
+  <div *ngIf="message">{{ message }}</div>
+</form>
+<hr />
+  <button (click)="register()">Register</button>
+  <button type="button" (click)="goToPasswordReset()" class="forgot-password-btn">
+  Forgot Password?
+</button>

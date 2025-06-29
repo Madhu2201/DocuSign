@@ -1,0 +1,122 @@
+<div class="container">
+  <div class="progress-steps">
+    <div class="step" [class.active]="currentStep >= 1">1. Create Envelope</div>
+    <div class="step" [class.active]="currentStep >= 2">2. Upload Document</div>
+    <div class="step" [class.active]="currentStep >= 3">3. Add Recipients</div>
+    <div class="step" [class.active]="currentStep >= 4">4. Send Envelope</div>
+  </div>
+
+  <div class="message" *ngIf="message" [class.error]="message.includes('❌')" [class.success]="message.includes('✅')">
+    {{ message }}
+  </div>
+
+  <!-- Step 1: Create Envelope -->
+  <div class="step-content" *ngIf="currentStep === 1">
+    <h2>Create New Envelope</h2>
+    <div class="form-group">
+      <label for="title">Envelope Title</label>
+      <input type="text" id="title" [(ngModel)]="title" placeholder="Enter envelope title">
+      <button (click)="createEnvelope()" [disabled]="!title">Create Envelope</button>
+    </div>
+  
+   <div class="envelope-info">
+    <ul>
+      <li>An envelope is a digital container for documents and recipients.</li>
+      <li>You start by naming your envelope to identify the purpose.</li>
+      <li>Upload PDF files that need to be signed.</li>
+      <li>Add recipients and assign roles like signer or CC.</li>
+      <li>Place fields like signature, date, and name on the document.</li>
+      <li>Send the envelope for secure e-signature workflow.</li>
+    </ul>
+  </div>
+  </div>
+  
+
+  <!--Step 2: Upload Document -->
+   <div class="step-content" *ngIf="currentStep === 2">
+    <!-- <h2>Upload Document</h2> -->
+    <div class="form-group">
+      <div class="upload-border">
+<div class="custom-file-upload-wrapper">
+  <label for="document" class="custom-file-label">📄 Click to select a PDF</label>
+  <input type="file" id="document" class="animated-file-input" (change)="onFileChange($event)" accept=".pdf">
+</div>
+<div *ngIf="fileName" class="file-preview">
+  <div class="file-icon">📄</div>
+  <div class="file-info">
+    <span class="file-name">{{ fileName }}</span>
+    <button class="remove-btn" (click)="removeFile()">✖</button>
+  </div>
+</div>
+<div class="upload-hint">
+  <span>⬇️ Upload your PDF to proceed</span>
+  </div>
+</div>
+      <button (click)="uploadDocument()" [disabled]="!file">Upload Document</button>
+    </div>
+    <div class="about-upload">
+  <h4>About Upload</h4>
+  <ul>
+    <li>This step lets you upload the PDF document that needs to be signed.</li>
+    <li>Ensure the file is in PDF format and under the allowed size limit.</li>
+    <li>The uploaded document will be used to place signature and other fields.</li>
+    <li>After uploading, you can assign recipients and prepare the document.</li>
+    <li>Make sure the content of the document is final before uploading.</li>
+  </ul>
+</div>
+<!-- <div>    <img src="assets/image/image.png" />
+</div> -->
+  </div>
+
+
+  <!-- Step 3: Add Recipients -->
+  <div class="step-content" *ngIf="currentStep === 3">
+    <h2>Add Recipients</h2>
+    <div class="recipients-list">
+      <div class="recipient-item" *ngFor="let recipient of recipients; let i = index">
+        <div class="form-group">
+          <input type="text" [(ngModel)]="recipient.name" placeholder="Recipient Name">
+          <input type="email" [(ngModel)]="recipient.email" placeholder="Recipient Email">
+          <select [(ngModel)]="recipient.role">
+            <option value="signer">Signer</option>
+            <option value="cc">CC</option>
+          </select>
+          <button class="remove-btn" (click)="removeRecipient(i)">Remove</button>
+        </div>
+      </div>
+      <button (click)="addRecipient()">Add Recipient</button>
+      <button class="continue-btn" (click)="submitRecipients()" [disabled]="recipients.length === 0">
+        Continue
+      </button>
+    </div>
+  </div>
+
+  <!-- Step 4: Send Envelope -->
+  <div class="step-content" *ngIf="currentStep === 4">
+    <h2>Review & Send</h2>
+    <div class="review-section">
+      <h3>Envelope Details</h3>
+      <p>Title: {{ envelopeTitle }}</p>
+      <p>Recipients: {{ recipients.length }}</p>
+      
+      <div class="recipient-summary" *ngFor="let recipient of recipients">
+        <p>{{ recipient.name }} ({{ recipient.email }}) - {{ recipient.role }}</p>
+      </div>
+
+      <button (click)="sendEnvelope()" class="send-button">
+        Send Envelope
+      </button>
+    </div>
+  </div>
+
+  <!-- Step 5: Completion -->
+  <div class="step-content" *ngIf="currentStep === 5">
+    <div class="completion-message">
+      <h2>✅ Envelope Sent Successfully!</h2>
+      <p>All recipients will receive an email with instructions.</p>
+    </div>
+  </div>
+</div>  
+
+
+

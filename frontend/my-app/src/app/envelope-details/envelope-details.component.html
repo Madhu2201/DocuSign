@@ -1,0 +1,19 @@
+  <div *ngIf="loading">Loading completed documents...</div>
+    <div *ngIf="error" class="error">{{ error }}</div>
+
+    <div *ngIf="!loading && completedDocuments.length === 0">
+      No completed documents found.
+    </div>
+
+    <div *ngIf="completedDocuments.length > 0">
+      <div *ngFor="let doc of completedDocuments" class="document-card">
+        <h3>{{ doc.envelopeTitle }}</h3>
+        <p><strong>Status:</strong> {{ doc.status }}</p>
+        <div *ngFor="let file of doc.signedFiles" class="signed-file">
+          <p><strong>Recipient:</strong> {{ file.recipientName }}</p>
+          <p><strong>Signed At:</strong> {{ file.signedAt | date:'short' }}</p>
+          <a *ngIf="file.filePath" [href]="file.filePath" target="_blank">View Signed PDF</a>
+        </div>
+        <hr />
+      </div>
+    </div>

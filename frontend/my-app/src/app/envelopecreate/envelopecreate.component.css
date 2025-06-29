@@ -1,0 +1,1075 @@
+ .container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #90c5e5;
+ 
+
+  }
+  
+  .progress-steps {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    padding: 20px 0;
+  }
+  
+  .step {
+    position: relative;
+    padding: 10px 20px;
+    background: #f0f0f0;
+    border-radius: 20px;
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .step.active {
+    background: #2196F3;
+    color: white;
+  }
+  
+  .message {
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    font-weight: 500;
+  }
+  
+  .message.error {
+    background: #ffebee;
+    color: #c62828;
+    border: 1px solid #ffcdd2;
+  }
+  
+  .message.success {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #a5d6a7;
+  }
+  
+  .step-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: #2196F3;
+    color: white;
+  }
+  
+  button:hover {
+    background: #1976D2;
+    transform: translateY(-1px);
+  }
+  
+  button:disabled {
+    background: #bdbdbd;
+    cursor: not-allowed;
+  }
+  
+  .remove-btn {
+    background: #ff5252;
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+  
+  .remove-btn:hover {
+    background: #d32f2f;
+  }
+  
+  .recipients-list {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .recipient-item {
+    background: #f9f9f9;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+  }
+  
+  .continue-btn {
+    display: block;
+    margin: 20px auto 0;
+    background: #4CAF50;
+  }
+  
+  .continue-btn:hover {
+    background: #388E3C;
+  }
+  
+  .review-section {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+.envelope-info {
+  margin-top: 25px;
+  padding: 20px;
+  background-color: #f1f8ff;
+  border-left: 4px solid #2196f3;
+  border-radius: 8px;
+}
+
+.envelope-info h4 {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #0d47a1;
+}
+
+.envelope-info ul {
+  padding-left: 20px;
+  margin: 0;
+}
+
+.envelope-info li {
+  margin-bottom: 8px;
+  font-size: 14.5px;
+  color: #333;
+}
+
+
+
+
+  .recipient-summary {
+    background: #f5f5f5;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 4px;
+  }
+  
+  .send-button {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    background: #2196F3;
+    font-size: 16px;
+    padding: 15px;
+  }
+  
+  .send-button:hover {
+    background: #1976D2;
+  }
+  
+  .completion-message {
+    text-align: center;
+    padding: 40px 0;
+  }
+  
+  .completion-message h2 {
+    color: #4CAF50;
+    margin-bottom: 20px;
+  }
+  
+  .signature-section {
+    margin: 20px 0;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+  }
+  
+  .signature-canvas-container {
+    width: 400px;
+    margin: 0 auto;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: relative;
+  }
+  
+  .signature-canvas-container canvas {
+    width: 100%;
+    height: 200px;
+    cursor: crosshair;
+    border: 1px solid #e0e0e0;
+    background: white;
+    touch-action: none;
+  }
+  
+  .canvas-controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    background: #f8f9fa;
+    border-top: 1px solid #ddd;
+  }
+  
+  .canvas-controls button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .canvas-controls button:first-child {
+    background: #dc3545;
+    color: white;
+  }
+  
+  .canvas-controls button:last-child {
+    background: #28a745;
+    color: white;
+  }
+  
+  .canvas-controls button:hover {
+    opacity: 0.9;
+  }
+  
+  .pdf-preview-container {
+    margin-top: 20px;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .pdf-container {
+    margin-left: 270px;
+    padding: 30px;
+    min-height: 800px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    position: relative;
+  }
+  
+  .pdf-container.drag-over {
+    background: #e3f2fd;
+    border: 2px dashed #2196F3;
+  }
+  
+  canvas {
+    background: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-radius: 4px;
+    max-width: 100%;
+  }
+  
+  .pdf-page {
+    display: block;
+    margin: 0 auto 20px;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: relative;
+  }
+  
+  .pdf-page:last-child {
+    margin-bottom: 0;
+  }
+  
+  .field-overlay {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.8);
+    border: 2px dashed;
+    border-radius: 4px;
+    cursor: move;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    z-index: 100;
+    transition: all 0.2s ease;
+    touch-action: none;
+  }
+  
+  .field-overlay:active {
+    cursor: grabbing;
+    cursor: -webkit-grabbing;
+    opacity: 0.8;
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+  
+  .field-overlay.dragging {
+    opacity: 0.8;
+    cursor: grabbing;
+    cursor: -webkit-grabbing;
+    z-index: 1000;
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+  
+  .field-overlay.signature-field {
+    border-color: #2196F3;
+    background: rgba(33, 150, 243, 0.1);
+  }
+  
+  .field-overlay.date-field {
+    border-color: #9C27B0;
+    background: rgba(156, 39, 176, 0.1);
+  }
+  
+  .field-overlay.text-field {
+    border-color: #4CAF50;
+    background: rgba(76, 175, 80, 0.1);
+  }
+  
+  .field-overlay .field-label {
+    position: absolute;
+    top: -20px;
+    left: 0;
+    background: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+    white-space: nowrap;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .field-overlay .remove-field-btn {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #f44336;
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    padding: 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    z-index: 101;
+  }
+  
+  .field-overlay .remove-field-btn:hover {
+    background: #d32f2f;
+  }
+  
+  .field-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .field-item {
+    padding: 12px 15px;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    cursor: move;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.2s ease;
+    user-select: none;
+  }
+  
+  .field-item:hover {
+    background: #f8f8f8;
+    border-color: #2196F3;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  .field-item:active {
+    transform: translateY(0);
+    background: #f0f0f0;
+  }
+  
+  .field-item i {
+    font-size: 18px;
+    color: #2196F3;
+  }
+  
+  .action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 15px;
+  }
+  
+  .action-buttons button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .action-buttons .clear-btn {
+    background: #dc3545;
+    color: white;
+  }
+  
+  .action-buttons .continue-btn {
+    background: #28a745;
+    color: white;
+  }
+  
+  .action-buttons button:disabled {
+    background: #6c757d;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+  
+  .sender-signature {
+    position: absolute;
+    background: rgba(76, 175, 80, 0.1);
+    border: 2px dashed #4CAF50;
+    border-radius: 4px;
+    padding: 10px;
+    min-width: 150px;
+    min-height: 60px;
+    cursor: move;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    z-index: 100;
+    transition: all 0.2s ease;
+    touch-action: none;
+  }
+  
+  .sender-signature:active {
+    cursor: grabbing;
+    cursor: -webkit-grabbing;
+    opacity: 0.8;
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+  
+  .sender-signature.dragging {
+    opacity: 0.8;
+    cursor: grabbing;
+    cursor: -webkit-grabbing;
+    z-index: 1000;
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+  
+  .sender-signature-label {
+    position: absolute;
+    top: -20px;
+    left: 0;
+    background: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+    color: #4CAF50;
+    white-space: nowrap;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .field-overlay, .sender-signature {
+    display: block !important;
+    visibility: visible !important;
+  }
+  
+  .document-preview-section {
+    margin: 20px 0;
+    background: #f5f5f5;
+    border-radius: 8px;
+    padding: 20px;
+    min-height: 500px;
+  }
+  
+  .pdf-preview-container {
+    width: 100%;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    min-height: 800px;
+    position: relative;
+    overflow: auto;
+  }
+  
+  .pdf-page {
+    width: 100%;
+    max-width: 850px;
+    margin: 0 auto;
+    background: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    position: relative;
+  }
+  
+  .pdf-page img, .pdf-page canvas, .pdf-page iframe {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  #documentContainer, .document-container {
+    width: 100%;
+    min-height: 800px;
+    background: white;
+    border: 1px solid #ddd;
+    margin: 20px 0;
+    position: relative;
+    overflow: auto;
+  }
+  
+  .place-fields-section {
+    margin: 20px 0;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .place-fields-section h3 {
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .field-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  
+  iframe.pdf-viewer {
+    width: 100%;
+    height: 800px;
+    border: none;
+  }
+  
+  .field-preview {
+    position: absolute;
+    background: rgba(33, 150, 243, 0.1);
+    border: 2px solid #2196F3;
+    border-radius: 4px;
+    pointer-events: all;
+    cursor: move;
+  }
+  
+  .field-preview.signature-field {
+    border-color: #FF5722;
+    background: rgba(255, 87, 34, 0.1);
+  }
+  
+  .field-preview.date-field {
+    border-color: #9C27B0;
+    background: rgba(156, 39, 176, 0.1);
+  }
+  
+  .field-label {
+    position: absolute;
+    top: -20px;
+    left: 0;
+    font-size: 12px;
+    color: #666;
+    white-space: nowrap;
+    background: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .field-item.dragging {
+    opacity: 0.5;
+    transform: scale(0.95);
+  }
+  
+  .pdf-container.can-drop {
+    background: #e3f2fd;
+    border: 2px dashed #2196F3;
+  }
+  
+  .field-panel {
+    position: fixed;
+    left: 0;
+    top: 100px;
+    width: 250px;
+    background: white;
+    border-right: 1px solid #e0e0e0;
+    padding: 20px;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    height: calc(100vh - 100px);
+    overflow-y: auto;
+    z-index: 1000;
+  }
+  
+  .field-panel h3 {
+    margin: 0 0 15px 0;
+    color: #333;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  
+  .signature-preview {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid #2196F3;
+    border-radius: 4px;
+    cursor: move;
+    user-select: none;
+    z-index: 1000;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .signature-preview img,
+  .signature-preview canvas {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+  }
+  
+  .signature-preview.dragging {
+    opacity: 0.8;
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+  
+  .field-overlay.signature-field,
+  .field-preview.signature-field {
+    background: rgba(33, 150, 243, 0.1);
+    border: 2px solid #2196F3;
+    min-width: 150px;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: move;
+  }
+  
+  .field-overlay.signature-field.active,
+  .field-preview.signature-field.active {
+    border-color: #1976D2;
+    background: rgba(33, 150, 243, 0.2);
+    box-shadow: 0 2px 8px rgba(33, 150, 243, 0.3);
+  }
+  
+  .signature-section {
+    margin: 20px 0;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+  }
+  
+  .signature-tools {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .signature-tools button {
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 4px;
+  }
+  
+  canvas.signature-canvas {
+    background: white !important;
+    border: 1px solid #ccc !important;
+  }
+  
+  .recipients-section {
+    margin-bottom: 30px;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .document-preview-section {
+    background: #f5f5f5;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 30px;
+  }
+  
+  .document-preview-section h3 {
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .pdf-preview-container {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    min-height: 800px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .pdf-container {
+    position: relative;
+    padding: 20px;
+    min-height: 800px;
+    background: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .pdf-page {
+    display: block;
+    margin: 0 auto 20px;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 4px;
+    max-width: 100%;
+  }
+  
+  .pdf-page:last-child {
+    margin-bottom: 0;
+  }
+  .field-placement-indicator {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #2196F3;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+  
+  .field-preview {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid #2196F3;
+    border-radius: 4px;
+    cursor: move;
+    z-index: 100;
+    transition: all 0.2s ease;
+  }
+  
+  .field-preview.signature-field {
+    border-color: #FF5722;
+    background: rgba(255, 87, 34, 0.1);
+  }
+  
+  .field-preview.date-field {
+    border-color: #9C27B0;
+    background: rgba(156, 39, 176, 0.1);
+  }
+  
+  .field-preview .field-label {
+    position: absolute;
+    top: -25px;
+    left: 0;
+    background: white;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    white-space: nowrap;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    z-index: 101;
+  }
+  
+  .field-preview .remove-field-btn {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #f44336;
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    padding: 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    z-index: 102;
+  }
+  
+  .field-preview .remove-field-btn:hover {
+    background: #d32f2f;
+  }
+  
+  .pdf-container.adding-field {
+    cursor: crosshair;
+  }
+  
+  .pdf-container.adding-field::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(33, 150, 243, 0.1);
+    pointer-events: none;
+  }
+  
+  .pdf-container.can-drop {
+    background: #e3f2fd;
+    border: 2px dashed #2196F3;
+  }  
+
+  .field-panel {
+  position: fixed;
+  left: 0;
+  top: 100px;
+  width: 200px;
+  background: white;
+  border-right: 1px solid #ccc;
+  padding: 15px;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+.field-item {
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: move;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: white;
+}
+
+.field-item:hover {
+  background: #f5f5f5;
+}
+
+.pdf-container {
+  padding: 20px;
+  background: #f5f5f5;
+  border-radius: 8px;
+  min-height: 800px;
+  position: relative;
+}
+
+.pdf-page {
+  display: block;
+  margin: 0 auto 20px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border-radius: 4px;
+}
+
+.pdf-page:last-child {
+  margin-bottom: 0;
+}
+
+canvas {
+  background: white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+} 
+
+@media (max-width: 600px) {
+  .progress-steps {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .progress-steps .step {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .form-group {
+    gap: 10px;
+  }
+
+  .step-content {
+    padding: 20px;
+  }
+}
+
+
+.intro-image img {
+  width: 400px;
+  max-width: 90%;
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.intro-image img:hover {
+  transform: scale(1.05);
+}
+
+
+
+
+
+/* Hide default file input */
+.animated-file-input {
+  display: none;
+}
+
+.custom-file-upload-wrapper {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.custom-file-label {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #4a90e2;
+  color: #fff;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  border: 2px dashed #4a90e2;
+  transition: all 0.3s ease;
+  animation: pulseGlow 1.6s infinite;
+}
+
+.custom-file-label:hover {
+  background-color: #357abd;
+  border-color: #2c65a2;
+}
+
+/* Optional pulse animation */
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(74, 144, 226, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(74, 144, 226, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(74, 144, 226, 0);
+  }
+}
+.upload-hint {
+  margin-top: 15px;
+  font-style: italic;
+  color: #444;
+  animation: bounce 2s infinite;
+  font-size: 14px;
+  text-align: center;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+}
+.selected-file {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333;
+  text-align: center;
+}
+.file-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: #f0f8ff;
+  border: 1px solid #007bff50;
+  border-radius: 8px;
+  padding: 10px 15px;
+  margin-top: 15px;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.1);
+  animation: fadeIn 0.4s ease-in;
+}
+
+.file-icon {
+  font-size: 28px;
+}
+
+.file-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.file-name {
+  font-weight: 500;
+  font-size: 16px;
+  color: #333;
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  color: #d9534f;
+  font-size: 18px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.remove-btn:hover {
+  transform: scale(1.2);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.upload-border{
+  border: 2px dashed #007bff;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #f0f8ff;
+  text-align: center;
+  transition: all 0.3s ease;
+  margin-bottom: 15px;
+}
+
+.about-upload {
+  margin-top: 20px;
+  padding: 12px 16px;
+  background-color: #f1f5f9;
+  border-left: 4px solid #0d6efd;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #333;
+}
+
+.about-upload h4 {
+  margin-bottom: 8px;
+  color: #0d6efd;
+}
+
+.about-upload ul {
+  padding-left: 20px;
+  margin: 0;
+}
+
+.about-upload li {
+  margin-bottom: 6px;
+}

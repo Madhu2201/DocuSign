@@ -1,0 +1,199 @@
+<!-- 
+
+<div class="prepare-document-container">
+  <div class="message" *ngIf="message" [class.success]="message.includes('✅')" [class.error]="message.includes('❌')">{{ message }}</div>
+
+  <div class="tools-panel">
+    <h3>Document Tools</h3>
+    <div class="field-types">
+      <ng-container *ngFor="let fieldType of fieldTypes">
+        <button 
+          [class.active]="selectedFieldType?.type === fieldType.type && selectedFieldType?.role === fieldType.role"
+          (click)="selectFieldType(fieldType.type, fieldType.role)"
+          [class]="fieldType.role">
+          {{ fieldType.label }}
+        </button>
+      </ng-container>
+    </div>
+
+    <div class="signature-area" [class.active]="isDrawingSignature">
+      <h4>Draw Your Signature</h4>
+      <div class="signature-instructions" *ngIf="!signatureImage">
+        Click and drag to draw your signature below
+      </div>
+      <canvas #signatureCanvas
+        width="300"
+        height="150"
+        (mousedown)="startDrawing($event)"
+        (mousemove)="draw($event)"
+        (mouseup)="stopDrawing()"
+        (mouseleave)="stopDrawing()"
+        (touchstart)="onTouchStart($event)"
+        (touchmove)="onTouchMove($event)"
+        (touchend)="onTouchEnd($event)"
+        (touchcancel)="onTouchEnd($event)">
+      </canvas>
+      <div class="signature-controls">
+        <button class="clear-btn" (click)="clearSignature()" [disabled]="!signatureImage">Clear Signature</button>
+        <button class="apply-btn" (click)="applySignature()" [disabled]="!signatureImage">Apply to Fields</button>
+      </div>
+    </div>
+
+    <button class="save-button" 
+            (click)="savePreparation()"
+            [disabled]="!canSave()"
+            [class.ready]="canSave()">
+      {{ getSaveButtonText() }}
+    </button>
+  </div>
+
+  <div class="pdf-viewer">
+    <div class="pdf-controls">
+      <button [disabled]="currentPage <= 1" (click)="prevPage()">Previous Page</button>
+      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+      <button [disabled]="currentPage >= totalPages" (click)="nextPage()">Next Page</button>
+    </div>
+
+    <div class="pdf-container" (click)="addField($event)">
+      <canvas #pdfCanvas></canvas>
+
+      <div class="fields-overlay">
+        <ng-container *ngFor="let field of fields; let i = index">
+          <div *ngIf="field.page === currentPage"
+            [id]="field.id"
+            cdkDrag
+            [cdkDragBoundary]="'.pdf-container'"
+            (cdkDragEnded)="onDragEnded($event, field)"
+            [ngStyle]="getFieldPosition(field)"
+            class="field-marker"
+            [class.sender]="field.role === 'sender'"
+            [class.signer]="field.role === 'signer'"
+            [class.signature]="field.type === 'signature'"
+            [class.has-signature]="hasSignature(field)"
+            [class.embedded]="field.embedded"
+            [class.active]="isActiveField(field)">
+            <div class="field-content">
+              <ng-container *ngIf="field.type === 'signature' && field.role === 'sender'">
+                <ng-container *ngIf="field.embedded">
+                  <div class="embedded-status">
+                    <span class="check">✓</span>
+                    <span class="text">Signature Embedded</span>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="!field.embedded">
+                  <img *ngIf="signatureImage" [src]="signatureImage" class="signature-preview" alt="Your Signature">
+                  <div *ngIf="!signatureImage" class="placeholder">
+                    <span class="icon">✍️</span>
+                    <span class="text">Draw Signature First</span>
+                  </div>
+                </ng-container>
+              </ng-container>
+              <ng-container *ngIf="field.type !== 'signature' || field.role !== 'sender'">
+                {{ getFieldPreview(field) }}
+              </ng-container>
+            </div>
+            <div class="field-type" [class.embedded]="field.embedded">
+              {{ field.role === 'sender' ? 'Sender' : 'Signer' }} {{ field.type }}
+              <span *ngIf="field.embedded" class="embedded-icon">✓</span>
+            </div>
+            <button class="remove-field" (click)="removeField(i)" *ngIf="!field.embedded">×</button>
+            <div class="drag-handle" cdkDragHandle *ngIf="!field.embedded">
+              <svg width="24" height="24" viewBox="0 0 24 24">
+                <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"/>
+              </svg>
+            </div>
+            <div class="resize-handle resize-handle-se" *ngIf="!field.embedded"></div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div> 
+
+ -->
+
+
+<div class="prepare-document-container">
+  <!-- Tools Panel -->
+  <div class="tools-panel">
+    <h3>Document Tools</h3>
+    <div class="field-types">
+      <ng-container *ngFor="let fieldType of fieldTypes">
+        <button 
+          [class.active]="selectedFieldType?.type === fieldType.type && selectedFieldType?.role === fieldType.role"
+          (click)="selectFieldType(fieldType.type, fieldType.role)"
+          [class]="fieldType.role">
+          {{ fieldType.label }}
+        </button>
+      </ng-container>
+    </div>
+
+    <button class="save-button" 
+            (click)="savePreparation()"
+            [disabled]="!canSave()"
+            [class.ready]="canSave()">
+      {{ getSaveButtonText() }}
+    </button>
+    <div class="prepare-help-box">
+  <h4>How to Use</h4>
+  <ul>
+    <li>📌 Click a field type (e.g., Signature, Date, Text) from the left panel.</li>
+    <li>🖱️ Then click anywhere on the PDF to place the selected field.</li>
+    <li>📍 Drag the field to reposition it on the document.</li>
+    <li>🔁 Use the navigation buttons to switch between PDF pages.</li>
+    <li>🛠️ Resize fields by dragging from the edges (if supported).</li>
+    <li>👤 Fields are color-coded based on recipient roles.</li>
+    <li>💾 Once done, click the **Save** button to continue.</li>
+  </ul>
+</div>
+
+  </div>
+
+  
+
+  <!-- PDF Viewer -->
+  <div class="document-viewer">
+    <div class="message" *ngIf="message" 
+         [class.success]="message.includes('✅')" 
+         [class.error]="message.includes('❌')">
+      {{ message }}
+    </div>
+
+    <div class="pdf-controls">
+      <button [disabled]="currentPage <= 1" (click)="prevPage()">Previous Page</button>
+      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+      <button [disabled]="currentPage >= totalPages" (click)="nextPage()">Next Page</button>
+    </div>
+
+    <div class="pdf-container" (mousedown)="onMouseDown($event)">
+      <canvas #pdfCanvas></canvas>
+
+      <div class="fields-overlay">
+        <ng-container *ngFor="let field of fields">
+          <div *ngIf="field.page === currentPage"
+               [id]="field.id"
+               cdkDrag
+               [cdkDragBoundary]="'.fields-overlay'"
+               (cdkDragEnded)="onDragEnded($event, field)"
+               [ngStyle]="getFieldPosition(field)"
+               class="field-marker"
+               [class.signature]="field.type === 'signature'"
+               [class.date]="field.type === 'date'"
+               [class.text]="field.type === 'text'">
+               
+            <div class="field-content">{{ getFieldPreview(field) }}</div>
+            <div class="field-type">{{ field.type }}</div>
+            <div class="drag-handle" cdkDragHandle>
+              <svg width="24" height="24" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"/>
+              </svg>
+            </div>
+            <!-- Resizable corner handle -->
+<div class="resize-corner" (mousedown)="startResize($event, field)"></div>
+
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

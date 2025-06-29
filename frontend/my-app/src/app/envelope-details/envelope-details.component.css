@@ -1,0 +1,125 @@
+/* .document-card {
+      border: 1px solid #ccc;
+      padding: 16px;
+      margin-bottom: 16px;
+      border-radius: 8px;
+    }
+    .signed-file {
+      margin-left: 20px;
+      margin-top: 10px;
+    }
+    .error {
+      color: red;
+      font-weight: bold;
+    } */
+
+
+
+    /* Container styling */
+div {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Loading message */
+/* Loading message */
+.loading-message {
+  text-align: center;
+  padding: 40px;
+  color: #4a6fa5;
+  font-size: 1.2rem;
+}
+
+/* Error message */
+.error {
+  background-color: #ffebee;
+  color: #d32f2f;
+  padding: 15px;
+  border-radius: 4px;
+  border-left: 4px solid #d32f2f;
+  margin: 20px 0;
+  font-weight: 500;
+}
+
+/* Empty state message */
+/* Replace the invalid :has() selector with a class selector applied in your template */
+.empty-state-message {
+  text-align: center;
+  padding: 40px;
+  color: #757575;
+  font-style: italic;
+  font-size: 1.1rem;
+}
+
+/* Document cards container */
+.document-cards-container {
+  display: grid;
+  gap: 25px;
+}
+
+/* Individual document card */
+.document-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.document-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.document-card h3 {
+  color: #2c3e50;
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 1.3rem;
+}
+
+.document-card p {
+  margin: 8px 0;
+  color: #34495e;
+}
+
+/* Signed file section */
+.signed-file {
+  background-color: #f9fbfd;
+  border-radius: 6px;
+  padding: 15px;
+  margin-top: 15px;
+  border: 1px solid #edf2f7;
+}
+
+.signed-file p {
+  margin: 6px 0;
+  color: #4a5568;
+}
+
+/* View PDF link */
+a {
+  display: inline-block;
+  background-color: #3182ce;
+  color: white !important;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  margin-top: 10px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+a:hover {
+  background-color: #2b6cb0;
+}
+
+/* Horizontal rule */
+hr {
+  border: 0;
+  height: 1px;
+  background: #e2e8f0;
+  margin: 20px -20px 0;
+}

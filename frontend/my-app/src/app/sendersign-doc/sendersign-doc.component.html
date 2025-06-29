@@ -1,0 +1,300 @@
+    <!-- <div class="document-signer">
+  <div class="document-viewer">
+    <div class="pdf-controls">
+      <button (click)="prevPage()" [disabled]="currentPage <= 1" class="btn btn-secondary">Previous Page</button>
+      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+      <button (click)="nextPage()" [disabled]="currentPage >= totalPages" class="btn btn-secondary">Next Page</button>
+    </div>
+
+    <div class="pdf-container">
+      <canvas #pdfViewer class="pdf-viewer" (click)="updateSignaturePosition($event)"></canvas>
+      
+      <ng-container *ngFor="let field of signatureFields">
+        <div class="signature-preview" 
+             *ngIf="field.page === currentPage" 
+             [style.left.px]="field.x" 
+             [style.top.px]="field.y"
+             [style.width.px]="field.width"
+             [style.height.px]="field.height"
+             cdkDrag
+             cdkDragBoundary=".pdf-container"
+             (cdkDragEnded)="onDragEnded($event, field)">
+          <button class="remove-signature" (click)="removeSignature(field.id)">×</button>
+          <img *ngIf="signatureData" [src]="signatureData" alt="Signature preview" style="width: 100%; height: 100%; object-fit: contain;">
+          <div class="drag-handle" cdkDragHandle>
+            <svg width="16" height="16" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"/>
+            </svg>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="signature-panel">
+    <h3>Draw Your Signature</h3>
+    <div class="canvas-container">
+      <canvas #signatureCanvas 
+              width="400" 
+              height="200"
+              (mousedown)="startDrawing($event)"
+              (mousemove)="draw($event)"
+              (mouseup)="stopDrawing()"
+              (mouseleave)="stopDrawing()"></canvas>
+    </div>
+    <div class="controls">
+      <button class="btn btn-secondary" (click)="clearSignature()">Clear</button>
+      <button class="btn btn-primary" (click)="submitSignature()" [disabled]="!signatureData || signatureFields.length === 0">
+        Save Signatures
+      </button>
+    </div>
+
+  </div>
+ 
+</div> 
+  -->
+
+
+<!-- 
+      <div class="document-signer">
+  <div class="document-viewer">
+    <div class="pdf-controls">
+      <button (click)="prevPage()" [disabled]="currentPage <= 1" class="btn btn-secondary">Previous Page</button>
+      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+      <button (click)="nextPage()" [disabled]="currentPage >= totalPages" class="btn btn-secondary">Next Page</button>
+    </div>
+
+    <div class="pdf-container">
+      <canvas #pdfViewer class="pdf-viewer" (click)="updateSignaturePosition($event)"></canvas>
+      
+   <ng-container *ngFor="let field of signatureFields">
+  <div class="signature-preview"
+       *ngIf="field.page === currentPage"
+       [style.left.px]="field.x"
+       [style.top.px]="field.y"
+       [style.width.px]="field.width"
+       [style.height.px]="field.height"
+       cdkDrag
+       cdkDragBoundary=".pdf-container"
+       (cdkDragEnded)="onDragEnded($event, field)">
+       
+    <button class="remove-signature" (click)="removeSignature(field.id)">×</button>
+    
+    <img *ngIf="field.signatureData"
+         [src]="field.signatureData"
+         alt="Signature preview"
+         style="width: 100%; height: 100%; object-fit: contain;">
+         
+    <div class="drag-handle" cdkDragHandle>
+      <svg width="16" height="16" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"/>
+      </svg>
+    </div>
+  </div>
+</ng-container>
+
+    </div>
+  </div>
+
+  <div class="signature-panel">
+    <h3>Draw Your Signature</h3>
+    <div class="canvas-container">
+      <canvas #signatureCanvas 
+              width="400" 
+              height="200"
+              (mousedown)="startDrawing($event)"
+              (mousemove)="draw($event)"
+              (mouseup)="stopDrawing()"
+              (mouseleave)="stopDrawing()"></canvas>
+    </div>
+    <div class="controls">
+      <button class="btn btn-secondary" (click)="clearSignature()">Clear</button>
+<button class="btn btn-primary" (click)="submitSignature()" [disabled]="signatureFields.length === 0">
+        Save Signatures
+      </button>
+    </div>
+     <div>
+  <h3>Type Signature</h3>
+  <input [(ngModel)]="typedName" placeholder="Type your name" />
+  <div style="margin: 10px 0;">
+    <p>Select Font:</p>
+    <div style="display: flex; gap: 10px;">
+      <div *ngFor="let font of fonts"
+           [ngStyle]="{
+             'font-family': font,
+             'font-size': '28px',
+             'padding': '6px 12px',
+             'border': selectedFont === font ? '2px solid blue' : '1px solid gray',
+             'cursor': 'pointer'
+           }"
+           (click)="selectedFont = font">
+        {{ typedName || 'Your Name' }}
+      </div>
+    </div>
+  </div>
+  <button (click)="addTypedSignature()">Generate Typed Signature</button>
+
+<div *ngIf="typedSignatureData" style="margin-top: 10px;">
+  <p>Preview:</p>
+  <img [src]="typedSignatureData" height="50" />
+</div>
+</div>
+  </div>
+ 
+</div>  -->
+  
+      <div class="document-signer">
+  <div class="document-viewer">
+    <div class="pdf-controls">
+      <button (click)="prevPage()" [disabled]="currentPage <= 1" class="btn btn-secondary">Previous Page</button>
+      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+      <button (click)="nextPage()" [disabled]="currentPage >= totalPages" class="btn btn-secondary">Next Page</button>
+    </div>
+
+    <div class="pdf-container">
+      <canvas #pdfViewer class="pdf-viewer" (click)="updateSignaturePosition($event)"></canvas>
+
+      <ng-container *ngFor="let field of signatureFields">
+        <div class="signature-preview"
+             *ngIf="field.page === currentPage"
+             [style.left.px]="field.x"
+             [style.top.px]="field.y"
+             [style.width.px]="field.width"
+             [style.height.px]="field.height"
+             cdkDrag
+             cdkDragBoundary=".pdf-container"
+             (cdkDragEnded)="onDragEnded($event, field)">
+
+          <button class="remove-signature" (click)="removeSignature(field.id)">×</button>
+
+          <img *ngIf="field.signatureData"
+               [src]="field.signatureData"
+               alt="Signature preview"
+               style="width: 100%; height: 100%; object-fit: contain;">
+
+          <div class="drag-handle" cdkDragHandle>
+            <svg width="16" height="16" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"/>
+            </svg>
+          </div>
+        </div>
+      </ng-container>
+<!-- <ng-container *ngFor="let stamp of stampFields">
+  <div class="stamp-preview"
+       *ngIf="stamp.page === currentPage"
+       [style.left.px]="stamp.x"
+       [style.top.px]="stamp.y"
+       [style.width.px]="stamp.width"
+       [style.height.px]="stamp.height"
+       [style.position]="'absolute'"
+       cdkDrag
+       cdkDragBoundary=".pdf-container"
+       (cdkDragEnded)="onDragEnded($event, stamp)">
+
+    <img [src]="stamp.signatureData"
+         alt="Stamp preview"
+         style="width: 100%; height: 100%; object-fit: contain;">
+  </div>
+</ng-container> -->
+
+<ng-container *ngFor="let stamp of stampFields">
+  <div
+    class="stamp-preview resizable"
+    *ngIf="stamp.page === currentPage"
+    [style.left.px]="stamp.x"
+    [style.top.px]="stamp.y"
+    [style.width.px]="stamp.width"
+    [style.height.px]="stamp.height"
+    [style.position]="'absolute'"
+    cdkDrag
+    cdkDragBoundary=".pdf-container"
+    (cdkDragEnded)="onDragEnded($event, stamp)"
+    (mouseup)="onResizeEnd($event, stamp)">
+
+    <img [src]="stamp.signatureData"
+         alt="Stamp preview"
+         style="width: 100%; height: 100%; object-fit: contain;">
+  </div>
+</ng-container>
+
+    </div>
+  </div>
+
+  <div class="signature-panel">
+    <h3>Draw Your Signature</h3>
+    <div class="canvas-container">
+      <canvas #signatureCanvas 
+              width="400" 
+              height="200"
+              (mousedown)="startDrawing($event)"
+              (mousemove)="draw($event)"
+              (mouseup)="stopDrawing()"
+              (mouseleave)="stopDrawing()"></canvas>
+    </div>
+    <div class="controls">
+      <button class="btn btn-secondary" (click)="clearSignature()">Clear</button>
+      <button class="btn btn-primary" (click)="submitSignature()" >
+        Save Signatures
+      </button>
+    </div>
+
+    <div>
+      <h3>Type Signature</h3>
+      <input [(ngModel)]="typedName" placeholder="Type your name" />
+      <div style="margin: 10px 0;">
+        <p>Select Font:</p>
+        <div style="display: flex; gap: 10px;">
+          <div *ngFor="let font of fonts"
+              [ngClass]="{ 'signature-font-option': true, 'selected': selectedFont === font }"
+               [ngStyle]="{
+                 'font-family': font,
+                 'font-size': '28px',
+                 'padding': '6px 12px',
+                 'border': selectedFont === font ? '2px solid blue' : '1px solid gray',
+                 'cursor': 'pointer'
+               }"
+               (click)="selectedFont = font">
+            {{ typedName || 'Your Name' }}
+          </div>
+        </div>
+      </div>
+      <button (click)="addTypedSignature()">Generate Typed Signature</button>
+
+      <div *ngIf="typedSignatureData" style="margin-top: 10px;">
+        <p>Preview:</p>
+        <img [src]="typedSignatureData" height="50" />
+      </div>
+    </div>
+
+    <!-- <div style="margin-top: 20px;">
+      <h3>Upload Stamp</h3>
+      <input type="file" (change)="onStampUpload($event)" accept="image/*" />
+      <div *ngIf="stampImageData" style="margin-top: 10px;">
+        <p>Preview:</p>
+        <img [src]="stampImageData" height="50" />
+        <p style="font-size: 12px;">Click on the document to place the stamp</p>
+       <button class="btn btn-warning btn-sm" (click)="stampImageData = ''">
+    Done Placing Stamp
+  </button>
+      </div>
+    </div> -->
+    <div class="upload-stamp-section">
+  <h3>Upload Stamp</h3>
+  <input type="file" (change)="onStampUpload($event)" accept="image/*" />
+
+  <div *ngIf="stampImageData" class="upload-stamp-preview">
+    <p>Preview:</p>
+    <img [src]="stampImageData" />
+    <p>Click on the document to place the stamp</p>
+    <button class="btn btn-warning" (click)="stampImageData = ''">Done Placing Stamp</button>
+  </div>
+</div>
+
+  </div>
+</div>
+
+
+
+
+
+  
