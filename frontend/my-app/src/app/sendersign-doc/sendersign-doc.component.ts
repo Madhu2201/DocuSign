@@ -1463,12 +1463,10 @@ stampImageData: string = '';
   const headers = this.getHeaders();
   const allFields = [...this.signatureFields, ...this.stampFields];
 
-  // Show confirm dialog ONLY if no fields
   if (!allFields.length) {
     const proceed = confirm('No signatures or stamps placed. Are you sure you want to submit?');
     if (!proceed) return;
 
-    // Even if no fields, navigate away (without alerts)
     this.router.navigate(['/prepare', this.documentId], {
       queryParams: { envelopeId: this.envelopeId }
     });
@@ -1549,7 +1547,7 @@ stampImageData: string = '';
     alert('Typed signature generated! Click on the document to place it.');
   }
 
-  // ✅ Final and only handler for stamp upload
+  //  Final and only handler for stamp upload
   onStampUpload(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {

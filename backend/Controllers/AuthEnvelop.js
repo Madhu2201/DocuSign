@@ -17,7 +17,6 @@ if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
 
-// New endpoint to get envelope by ID
 export const getEnvelope = async (req, res) => {
   try {
     const { envelopeId } = req.params;
@@ -34,13 +33,10 @@ export const getEnvelope = async (req, res) => {
       return res.status(403).json({ message: 'Not authorized to access this envelope' });
     }
 
-    // Get related documents
     const documents = await Document.find({ envelopeId: envelope._id });
 
-    // Get related recipients
     const recipients = await Recipient.find({ envelopeId: envelope._id }).sort('order');
 
-    // Combine the data
     const envelopeData = {
       ...envelope.toObject(),
       documents,
@@ -195,20 +191,19 @@ export const signExistingDocument = async (req, res) => {
       height: Number(height),
     });
 
-    // 📅 Draw date below signature
     const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
     const currentDate = new Date().toLocaleDateString();
 
     page.drawText(`Date: ${currentDate}`, {
       x: Number(x),
-      y: Number(y) - 14, // Slightly below signature
+      y: Number(y) - 14, 
       size: 8,
       font,
       color: rgb(0, 0, 0),
     });
 
     const updatedPdfBytes = await pdfDoc.save();
-    fs.writeFileSync(pdfPath, updatedPdfBytes); // Overwrite original file
+    fs.writeFileSync(pdfPath, updatedPdfBytes); 
 
     document.status = 'signed';
     await document.save();
@@ -225,238 +220,6 @@ export const signExistingDocument = async (req, res) => {
 };
 
 
-
-// export const prepareDocument = async (req, res) => {
-//   try {
-//     const { documentId } = req.params;
-//     const { signature, page, x, y, width, height, fields } = req.body;
-
-//     console.log('Received prepare document request:', {
-//       documentId,
-//       page,
-//       coordinates: { x, y, width, height },
-//       hasSignature: !!signature,
-//       signatureLength: signature?.length
-//     });
-
-//     // Validate input
-//     if (!documentId) {
-//       return res.status(400).json({ message: 'Document ID is required' });
-//     }
-
-//     if (!page || x === undefined || y === undefined || !width || !height) {
-//       return res.status(400).json({ 
-//         message: 'Missing required parameters: page, x, y, width, and height are required',
-//         received: { page, x, y, width, height }
-//       });
-//     }
-
-//     // Validate numeric values
-//     if (!Number.isFinite(page) || !Number.isFinite(x) || !Number.isFinite(y) || 
-//         !Number.isFinite(width) || !Number.isFinite(height)) {
-//       return res.status(400).json({ 
-//         message: 'Invalid coordinate values. All position and size values must be numbers.',
-//         received: { page, x, y, width, height }
-//       });
-//     }
-
-//     // Validate ranges
-//     if (x < 0 || y < 0 || width <= 0 || height <= 0) {
-//       return res.status(400).json({ 
-//         message: 'Invalid dimensions. Coordinates must be non-negative and dimensions must be positive.',
-//         received: { x, y, width, height }
-//       });
-//     }
-
-//     // Get the document
-//     const document = await Document.findById(documentId);
-//     if (!document) {
-//       console.error('Document not found:', documentId);
-//       return res.status(404).json({ message: 'Document not found' });
-//     }
-
-//     // Get the envelope
-//     const envelope = await Envelope.findById(document.envelopeId);
-//     if (!envelope) {
-//       console.error('Envelope not found for document:', document.envelopeId);
-//       return res.status(404).json({ message: 'Envelope not found' });
-//     }
-
-//     // Check authorization
-//     if (envelope.sender.toString() !== req.user._id.toString()) {
-//       console.error('Unauthorized access attempt:', {
-//         userId: req.user._id,
-//         envelopeSender: envelope.sender
-//       });
-//       return res.status(403).json({ message: 'Not authorized to modify this document' });
-//     }
-
-//     try {
-//       // Load the PDF document
-//       const pdfPath = path.join(process.cwd(), document.filePath.replace(/^\//, ''));
-//       console.log('Loading PDF from:', pdfPath);
-      
-//       if (!fs.existsSync(pdfPath)) {
-//         console.error('PDF file not found:', {
-//           path: pdfPath,
-//           documentPath: document.filePath,
-//           cwd: process.cwd()
-//         });
-//         return res.status(404).json({ message: 'PDF file not found' });
-//       }
-
-//       const pdfBytes = fs.readFileSync(pdfPath);
-//       const pdfDoc = await PDFDocument.load(pdfBytes);
-//       const pages = pdfDoc.getPages();
-
-//       // Validate page number
-//       if (page < 1 || page > pages.length) {
-//         return res.status(400).json({ 
-//           message: 'Invalid page number',
-//           received: page,
-//           totalPages: pages.length
-//         });
-//       }
-
-//       // If signature is provided, embed it
-//       if (signature) {
-//         try {
-//           const targetPage = pages[page - 1];
-//           console.log('Processing signature for page:', page);
-          
-//           if (!signature.includes('base64')) {
-//             return res.status(400).json({ 
-//               message: 'Invalid signature format. Base64 encoded image required.'
-//             });
-//           }
-
-//           // Convert base64 signature to bytes
-//           const signatureImageData = signature.split(',')[1];
-//           if (!signatureImageData) {
-//             return res.status(400).json({ 
-//               message: 'Invalid signature data format'
-//             });
-//           }
-
-//           const signatureBytes = Buffer.from(signatureImageData, 'base64');
-//           if (signatureBytes.length === 0) {
-//             return res.status(400).json({ 
-//               message: 'Empty signature data'
-//             });
-//           }
-          
-//           // Embed the signature image
-//           let signatureImage;
-//           try {
-//             if (signature.includes('image/png')) {
-//               signatureImage = await pdfDoc.embedPng(signatureBytes);
-//             } else if (signature.includes('image/jpeg') || signature.includes('image/jpg')) {
-//               signatureImage = await pdfDoc.embedJpg(signatureBytes);
-//             } else {
-//               return res.status(400).json({ 
-//                 message: 'Unsupported signature image format. Only PNG and JPEG are supported.'
-//               });
-//             }
-//           } catch (embedError) {
-//             console.error('Error embedding signature image:', embedError);
-//             return res.status(500).json({ 
-//               message: 'Failed to embed signature image',
-//               details: embedError.message 
-//             });
-//           }
-          
-//           // Get page dimensions
-//           const { width: pageWidth, height: pageHeight } = targetPage.getSize();
-          
-//           // Validate coordinates
-//           if (typeof x !== 'number' || typeof y !== 'number') {
-//             return res.status(400).json({ 
-//               message: 'Invalid signature coordinates'
-//             });
-//           }
-
-//           // Calculate signature position (use provided coordinates or center)
-//           const signatureX = x || (pageWidth - width) / 2;
-//           const signatureY = y || (pageHeight - height) / 2;
-          
-//           console.log('Embedding signature at:', { signatureX, signatureY, width, height });
-
-//           // Draw the signature
-//           targetPage.drawImage(signatureImage, {
-//             x: signatureX,
-//             y: signatureY,
-//             width: width || 150,
-//             height: height || 50
-//           });
-
-//           // Add "Signed by Sender" text
-//           const font = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
-//           targetPage.drawText('Signed by Sender', {
-//             x: signatureX,
-//             y: signatureY - 20,
-//             size: 8,
-//             font: font,
-//             color: rgb(0.4, 0.4, 0.4)
-//           });
-//         } catch (err) {
-//           console.error('Error embedding signature:', err);
-//           return res.status(500).json({ 
-//             message: 'Error embedding signature',
-//             details: err.message 
-//           });
-//         }
-//       }
-
-//       // Save the modified PDF
-//       const modifiedPdfBytes = await pdfDoc.save();
-//       const preparedFileName = `prepared-${document._id}.pdf`;
-//       const preparedFilePath = path.join(process.cwd(), 'uploads', preparedFileName);
-      
-//       // Ensure uploads directory exists
-//       const uploadsDir = path.join(process.cwd(), 'uploads');
-//       if (!fs.existsSync(uploadsDir)) {
-//         fs.mkdirSync(uploadsDir, { recursive: true });
-//       }
-
-//       fs.writeFileSync(preparedFilePath, modifiedPdfBytes);
-
-//       // Update document with prepared file path and fields
-//       document.preparedFilePath = `/uploads/${preparedFileName}`;
-//       if (fields && fields.length > 0) {
-//         document.fields = fields;
-//       }
-//       await document.save();
-
-//       // Create audit log
-//       await AuditLog.create({
-//         envelopeId: document.envelopeId,
-//         action: signature ? 'signature_embedded' : 'fields_added',
-//         userId: req.user._id,
-//         details: {
-//           page,
-//           timestamp: new Date()
-//         }
-//       });
-
-//       res.status(200).json({
-//         message: signature ? 'Signature embedded successfully' : 'Fields added successfully',
-//         document: document
-//       });
-//     } catch (err) {
-//       console.error('Error in PDF processing:', err);
-//       res.status(500).json({
-//         message: 'Error processing PDF',
-//         details: err.message
-//       });
-//     }
-//   } catch (err) {
-//     console.error('Error in prepareDocument:', err);
-//     res.status(500).json({
-//       message: 'Server error during document preparation',
-//       details: err.message
-//     });
-//   }
-// };
 
 // export const saveFields = async (req, res) => {
 //   try {
@@ -487,14 +250,12 @@ export const prepareDocument = async (req, res) => {
   try {
     const { documentId } = req.params;
     
-    // Validate request body
     if (!req.body || typeof req.body !== 'object') {
       return res.status(400).json({ message: 'Invalid request body' });
     }
 
     const { signerFields = [], senderFields = [] } = req.body;
 
-    // Validate fields data
     if (!Array.isArray(signerFields) || !Array.isArray(senderFields)) {
       return res.status(400).json({ message: 'signerFields and senderFields must be arrays' });
     }
@@ -505,13 +266,11 @@ export const prepareDocument = async (req, res) => {
       return res.status(404).json({ message: 'Document not found' });
     }
 
-    // Get the envelope
     const envelope = await Envelope.findById(document.envelopeId);
     if (!envelope) {
       return res.status(404).json({ message: 'Envelope not found' });
     }
 
-    // Check authorization
     if (envelope.sender.toString() !== req.user._id.toString()) {
       return res.status(403).json({ message: 'Not authorized to modify this document' });
     }
@@ -798,8 +557,8 @@ export const getSignDocument = async (req, res) => {
     const fields = await SignatureField.find({
       documentId: document._id,
       $or: [
-        { recipientId: recipientId },              // explicitly assigned to recipient
-        { recipientId: { $exists: false }, role: 'signer' }  // generic signer fields
+        { recipientId: recipientId },             
+        { recipientId: { $exists: false }, role: 'signer' }  
       ]
     });
 

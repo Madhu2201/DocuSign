@@ -23,7 +23,6 @@ export class EnvelopecreateComponent implements OnInit {
   currentStep = 1;
 fileName: string = '';
 
-  // Recipients with order field
   recipients: { name: string; email: string; role: string; order: number }[] = [];
   
   @ViewChild('pdfContainer') pdfContainerRef!: ElementRef;
@@ -36,7 +35,6 @@ fileName: string = '';
   ) {}
 
   ngOnInit() {
-    // Check for step and envelopeId in query params
     this.route.queryParams.subscribe(params => {
       if (params['step']) {
         this.currentStep = parseInt(params['step']);

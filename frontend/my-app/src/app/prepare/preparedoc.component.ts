@@ -151,13 +151,10 @@ initialHeight = 0;
       const page = await this.pdfDoc.getPage(pageNumber);
       const canvas = this.pdfCanvas.nativeElement;
       
-      // Store original viewport for coordinate calculations
       this.originalViewport = page.getViewport({ scale: 1.0 });
 
-      // Create viewport with fixed scale
       const viewport = page.getViewport({ scale: this.scale });
 
-      // Set canvas dimensions to match viewport
       canvas.height = viewport.height;
       canvas.width = viewport.width;
 
@@ -181,23 +178,19 @@ initialHeight = 0;
     }
   }
 
-  // Convert screen coordinates to PDF coordinates
   screenToPdfCoordinates(x: number, y: number): { x: number, y: number } {
     const canvas = this.pdfCanvas.nativeElement;
     const rect = canvas.getBoundingClientRect();
 
-    // Get the click position relative to the canvas
     const relativeX = x - rect.left;
     const relativeY = y - rect.top;
 
-    // Convert to PDF coordinates
     const pdfX = (relativeX / this.scale);
     const pdfY = this.originalViewport.height - (relativeY / this.scale);
 
     return { x: pdfX, y: pdfY };
   }
 
-  // Convert PDF coordinates to screen coordinates
   pdfToScreenCoordinates(x: number, y: number): { x: number, y: number } {
     if (!this.originalViewport) return { x, y };
 
@@ -210,7 +203,6 @@ initialHeight = 0;
     const canvasX = x * this.scale;
     const canvasY = (this.originalViewport.height - y) * this.scale;
 
-    // Convert to screen coordinates
     return {
       x: canvasX * scaleX,
       y: canvasY * scaleY
@@ -250,8 +242,8 @@ initialHeight = 0;
       page: this.currentPage,
       x: pdfCoords.x,
       y: pdfCoords.y,
-      width: 150,  // Default width in PDF units
-      height: 50,  // Default height in PDF units
+      width: 150,  
+      height: 50,  
       id: `field-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
       embedded: false
     };
@@ -296,15 +288,13 @@ initialHeight = 0;
       const deltaX = parseInt(matches[1], 10);
       const deltaY = parseInt(matches[2], 10);
 
-      // Convert the deltas to PDF coordinates
       const deltaInPdfUnits = {
         x: deltaX / this.scale,
         y: deltaY / this.scale
       };
 
-      // Update field position
       field.x += deltaInPdfUnits.x;
-      field.y -= deltaInPdfUnits.y; // Subtract because PDF coordinates are flipped
+      field.y -= deltaInPdfUnits.y; 
 
       // Reset the transform
       element.style.transform = 'none';

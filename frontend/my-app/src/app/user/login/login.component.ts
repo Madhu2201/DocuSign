@@ -22,7 +22,7 @@ export class LoginComponent {
   login() {
     this.auth.login({ email: this.email, password: this.password }).subscribe(
       (res:any) => {
-        this.auth.saveToken(res.token); // Save token with consistent key
+        this.auth.saveToken(res.token); 
         this.router.navigate(['/home']);
       },
       (err:any) => {
