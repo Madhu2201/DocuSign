@@ -1,62 +1,57 @@
 <div class="container">
-  <!-- Left side - Signature Drawing Area -->
-  <div class="signature-area">
-    <h3>Your Signature</h3>
-    <canvas #signatureCanvas width="300" height="150"
-      (mousedown)="startDrawing($event)"
-      (mousemove)="draw($event)"
-      (mouseup)="stopDrawing()"
-      (mouseleave)="stopDrawing()"
-    ></canvas>
-    <div class="signature-controls">
-      <button (click)="clearSignature()">Clear</button>
-    </div>
-  </div>
-
-  <!-- Right side - Document Viewer -->
-  <div class="document-container">
-    <!-- PDF Navigation Controls -->
-    <div class="pdf-controls">
-      <button [disabled]="currentPage === 1" (click)="prevPage()">Previous</button>
-      <span>Page {{currentPage}} of {{totalPages}}</span>
-      <button [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
-    </div>
-
-    <!-- PDF Viewer with Signature Fields -->
-    <div class="pdf-viewer">
-      <canvas #pdfViewer></canvas>
-      
-      <!-- Signature Fields Layer -->
-      <div *ngFor="let field of signatureFields" 
-           [style.left.px]="field.x"
-           [style.top.px]="field.y"
-           [style.width.px]="field.width"
-           [style.height.px]="field.height"
-           [style.position]="'absolute'"
-           [style.border]="field.completed ? 'none' : '2px dashed #007bff'"
-           [style.background]="field.completed ? 'transparent' : 'rgba(0, 123, 255, 0.1)'">
-        
-        <!-- Show completed signatures -->
-        <img *ngIf="field.completed && field.value" 
-             [src]="field.value" 
-             [style.width.px]="field.width"
-             [style.height.px]="field.height">
-             
-        <!-- Show signature placement area for current signer -->
-        <div *ngIf="!field.completed && field.recipientId === currentRecipientId"
-             class="signature-placeholder"
-             (click)="placeSignature(field)">
-          Click to place signature
+      <div class="signature-area">
+        <h3>Your Signature</h3>
+        <canvas #signatureCanvas width="300" height="150"
+          (mousedown)="startDrawing($event)"
+          (mousemove)="draw($event)"
+          (mouseup)="stopDrawing()"
+          (mouseleave)="stopDrawing()"
+        ></canvas>
+        <div class="signature-controls">
+          <button (click)="clearSignature()">Clear</button>
         </div>
       </div>
-    </div>
-  </div>
 
-  <!-- Action Buttons -->
-  <div class="action-buttons">
-    <button (click)="submitSignatures()" 
-            [disabled]="!hasRequiredSignatures()">
-      Submit Signatures
-    </button>
-  </div>
-</div> 
+      <div class="document-container">
+        <div class="pdf-controls">
+          <button [disabled]="currentPage === 1" (click)="prevPage()">Previous</button>
+          <span>Page {{currentPage}} of {{totalPages}}</span>
+          <button [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
+        </div>
+
+        <div class="pdf-viewer">
+          <canvas #pdfViewer></canvas>
+          
+          <!-- Signature Fields -->
+          <div *ngFor="let field of signatureFields" 
+               [style.left.px]="field.x"
+               [style.top.px]="field.y"
+               [style.width.px]="field.width"
+               [style.height.px]="field.height"
+               [style.position]="'absolute'"
+               [style.border]="field.completed ? 'none' : '2px dashed #007bff'"
+               [style.background]="field.completed ? 'transparent' : 'rgba(0, 123, 255, 0.1)'">
+            
+            <!-- Show completed signatures -->
+            <img *ngIf="field.completed && field.value" 
+                 [src]="field.value" 
+                 [style.width.px]="field.width"
+                 [style.height.px]="field.height">
+                 
+            <!-- Show signature placement area for current signer -->
+            <div *ngIf="!field.completed && field.recipientId === currentRecipientId"
+                 class="signature-placeholder"
+                 (click)="placeSignature(field)">
+              Click to place signature
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button (click)="submitSignatures()" 
+                [disabled]="!hasRequiredSignatures()">
+          Submit Signatures
+        </button>
+      </div>
+    </div>
